@@ -1,3 +1,4 @@
+a2wsgi==0.8.0
 annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.13.0
@@ -5,6 +6,7 @@ click==8.4.1
 dnspython==2.8.0
 email-validator==2.3.0
 fastapi==0.136.3
+gunicorn==20.1.0
 h11==0.16.0
 httptools==0.8.0
 idna==3.18
