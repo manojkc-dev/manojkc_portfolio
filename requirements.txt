@@ -4,3 +4,4 @@ gunicorn
 a2wsgi
 pydantic
 email-validator
+sqlalchemy
