@@ -9,6 +9,7 @@ from models import ContactMessage as ContactMessageModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+
 # 1. INITIALIZE DATABASE TABLES
 Base.metadata.create_all(bind=engine)
 
@@ -18,10 +19,9 @@ app = FastAPI()
 # 3. CORS MIDDLEWARE
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://manojkc1.com.np"], # YOUR LIVE DOMAIN
     allow_methods=["*"],
     allow_headers=["*"],
-    allow_credentials=True,
 )
 
 # 4. DATABASE SESSION DEPENDENCY

@@ -17,8 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = document.getElementById("email").value;
             const message = document.getElementById("message").value;
 
+            // We use the relative path '/contact' so it works on your live domain
+            // and directs the request to your FastAPI backend
             try {
-                const response = await fetch("/contact", {
+                const response = await fetch("https://manojkc-backend.onrender.com/contact", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -26,17 +28,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     body: JSON.stringify({ name, email, message }),
                 });
 
-                const result = await response.json();
+                // Check if response is JSON before parsing
+                const result = await response.json().catch(() => ({}));
 
                 if (response.ok) {
                     alert("Message sent successfully!");
                     contactForm.reset();
                 } else {
-                    alert("Error: " + (result.message || "Something went wrong"));
+                    alert("Error: " + (result.message || "Failed to send message."));
                 }
             } catch (error) {
                 console.error("Error submitting form:", error);
-                alert("Failed to send message. Please check your connection.");
+                alert("Failed to send message. Please check your network connection.");
             }
         });
     }
