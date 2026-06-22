@@ -3,6 +3,8 @@ import os
 import smtplib
 from email.message import EmailMessage
 
+from fastapi.responses import FileResponse
+
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
@@ -84,17 +86,10 @@ async def create_contact_message(data: ContactMessageSchema, db: Session = Depen
     return {"status": "success", "message": "Message Sent Successfully!"}
 
 # 7. GET ENDPOINT FOR PROJECTS
-@app.get("/projects")
-async def get_projects():
-    return {"projects": [
-        {"title": "AcadFlow SMS", "description": "Student system"},
-        {"title": "Shabdhabhandar", "description": "Dictionary app"}
-    ]}
+# 8. SERVE THE HOMEPAGE AT THE ROOT
+@app.get("/")
+def read_root():
+    return FileResponse("index.html")
 
-# 8. MOUNT STATIC FILES (MUST BE AT THE VERY BOTTOM)
-# This serves index.html at the root ("/") automatically without conflicting routes.
-app.mount("/static", StaticFiles(directory=".", html=True), name="static")
-
-@app.get("/health")
-def health_check():
-    return {"status": "healthy"}
+# 9. MAP THE "/static" URL TO YOUR ROOT FOLDER
+app.mount("/static", StaticFiles(directory="."), name="static")
