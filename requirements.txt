@@ -5,3 +5,4 @@ a2wsgi
 pydantic
 email-validator
 sqlalchemy
+psycopg2-binary
