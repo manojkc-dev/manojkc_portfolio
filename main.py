@@ -95,4 +95,4 @@ def read_root():
     return FileResponse("index.html")
 
 # 9. MAP THE "/static" URL TO YOUR ROOT FOLDER
-app.mount("/static", StaticFiles(directory="assets"), name="assets")
+app.mount("/static", StaticFiles(directory="static"), name="static")
