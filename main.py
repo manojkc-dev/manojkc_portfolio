@@ -14,24 +14,21 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 
-# 1. INITIALIZE DATABASE TABLES
 Base.metadata.create_all(bind=engine)
 
-# 2. INITIALIZE FASTAPI APP
 app = FastAPI()
 
-# 3. CORS MIDDLEWARE
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://manojkc1.com.np", 
-        "https://manojkc-portfolio.onrender.com"
-    ],
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# 4. DATABASE SESSION DEPENDENCY
+
+
 def get_db():
     db = SessionLocal()
     try:
@@ -39,7 +36,8 @@ def get_db():
     finally:
         db.close()
 
-# 5. PYDANTIC VALIDATION SCHEMA
+
+
 class ContactMessageSchema(BaseModel):
     name: str
     email: EmailStr
@@ -47,52 +45,66 @@ class ContactMessageSchema(BaseModel):
 
 
 
-# --- EMAIL CONFIGURATION ---
-MY_EMAIL = "khatrimanoj2135@gmail.com"
-# PASTE YOUR 16-CHARACTER APP PASSWORD HERE (No spaces)
-MY_APP_PASSWORD = "bmkk mpuy vvme uobk" 
+
+MY_EMAIL = "manojkc1dev@gmail.com"
+
+MY_APP_PASSWORD = "xpxiygqwpklxrhpy"
+
 
 def send_email_notification(sender_name, sender_email, sender_message):
+    # 1. Setup the message
+    msg = EmailMessage()
+    msg.set_content(f"New message from: {sender_name}\nEmail: {sender_email}\n\nMessage:\n{sender_message}")
+    msg['Subject'] = "New Portfolio Contact"
+    msg['From'] = MY_EMAIL
+    msg['To'] = MY_EMAIL
+
+    # 2. Use Port 587 with STARTTLS (Most reliable for Gmail)
     try:
-        msg = EmailMessage()
-        msg.set_content(f"You got a new message from your portfolio!\n\nName: {sender_name}\nEmail: {sender_email}\n\nMessage:\n{sender_message}")
+        print("Attempting to connect to Gmail SMTP...")
+        # Use port 587 for TLS
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()  # Upgrade to secure connection
+            
+            # REMOVE ALL SPACES FROM YOUR APP PASSWORD
+            # Example: "abcd efgh ijkl mnop" -> "abcdefghijklmnop"
+            server.login(MY_EMAIL, MY_APP_PASSWORD) 
+            
+            server.send_message(msg)
         
-        # Make sure you only have EXACTLY ONE of each of these lines!
-        msg['Subject'] = f"Portfolio Contact: {sender_name}"
-        msg['From'] = MY_EMAIL
-        msg['To'] = MY_EMAIL
-        msg['Reply-To'] = sender_email
-
-        # Connect to Gmail securely
-        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        server.login(MY_EMAIL, MY_APP_PASSWORD)
-        server.send_message(msg)
-        server.quit()
-        print("SUCCESS: Email notification sent to your inbox!")
+        print("SUCCESS: Email sent successfully!")
+        return True
+        
+    except smtplib.SMTPAuthenticationError:
+        print("ERROR: Authentication failed. Check your email and 16-character App Password (no spaces).")
     except Exception as e:
-        print(f"ERROR: Failed to send email: {e}")
+        print(f"ERROR: A connection or server error occurred: {e}")
+    
+    return False
 
-# --- Email Configuration END ---        
 
-# 6. POST ENDPOINT FOR CONTACT FORM
+
 @app.post("/api/contact")
 async def create_contact_message(data: ContactMessageSchema, db: Session = Depends(get_db)):
-    new_message = ContactMessageModel(
-        name=data.name,
-        email=data.email,
-        message=data.message
-    )
-    db.add(new_message)
-    db.commit()
-    db.refresh(new_message)
-    send_email_notification(data.name, data.email, data.message)
-    return {"status": "success", "message": "Message Sent Successfully!"}
+    try:
+        new_message = ContactMessageModel(name=data.name, email=data.email, message=data.message)
+        db.add(new_message)
+        db.commit()
+        db.refresh(new_message)
+        
+        send_email_notification(data.name, data.email, data.message)
+        return {"status": "success", "message": "Message Sent Successfully!"}
+    
+    except Exception as e:
+        # THIS PRINTS THE REAL ERROR TO YOUR VS CODE TERMINAL
+        print(f"--- DEBUG ERROR: {str(e)} ---")
+        # THIS SENDS THE REAL ERROR TO THE BROWSER
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail=str(e))
+    
 
-# 7. GET ENDPOINT FOR PROJECTS
-# 8. SERVE THE HOMEPAGE AT THE ROOT
 @app.get("/")
 def read_root():
     return FileResponse("index.html")
 
-# 9. MAP THE "/static" URL TO YOUR ROOT FOLDER
 app.mount("/static", StaticFiles(directory="static"), name="static")
