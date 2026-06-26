@@ -8,17 +8,17 @@
     <priority>1.0</priority>
     
     <image:image>
-      <image:loc>https://manojkc1.com.np/assets/images/manoj-kc-python-backend-developer.jpg</image:loc>
+      <image:loc>https://manojkc1.com.np/static/images/manoj-kc-python-backend-developer.jpg</image:loc>
       <image:caption>Manoj K.C. - Python and Django Backend Developer Portfolio</image:caption>
     </image:image>
 
     <image:image>
-      <image:loc>https://manojkc1.com.np/assets/images/calcpro-django-rest-api-calculator.png</image:loc>
+      <image:loc>https://manojkc1.com.np/static/images/calcpro-django-rest-api-calculator.png</image:loc>
       <image:caption>CalcPro Calculator Project built with Python and Django</image:caption>
     </image:image>
 
     <image:image>
-      <image:loc>https://manojkc1.com.np/assets/images/shabdhabhandar-django-rest-api-calculator.png</image:loc>
+      <image:loc>https://manojkc1.com.np/static/images/shabdhabhandar-django-rest-api-calculator.png</image:loc>
       <image:caption>Shabdhabhandar Dictionary built with Python and Django</image:caption>
     </image:image>
   </url>
