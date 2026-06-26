@@ -39,3 +39,31 @@ I’m always interested in hearing about new projects, backend architecture chal
 * **Portfolio:** [manojkc-portfolio.onrender.com](https://manojkc1.com.np)
 * **LinkedIn:** [in/manojkc1dev](https://www.linkedin.com/in/manojkc1dev)
 * **GitHub:** [github.com/manojkc1dev](https://github.com/manojkc1dev)
+
+
+### 📊 GitHub Stats
+<p align="center">
+  <img src="https://github-readme-stats.shion.dev/api?username=manojkc1dev&theme=default_repocard&hide_border=false&include_all_commits=false&count_private=false" alt="GitHub Stats" />
+</p>
+
+<p align="center">
+  <img src="https://streak-stats.demolab.com/?user=manojkc1dev&theme=default_repocard&hide_border" alt="GitHub Streak" />
+</p>
+
+<p align="center">
+  <img src="https://github-readme-stats.shion.dev/api/top-langs/?username=manojkc1dev&theme=default_repocard&hide_border=false&include_all_commits=false&count_private=false&layout=compact" alt="Top Languages" />
+</p>
+
+---
+
+<p align="center">
+  <a href="https://github.com/manojkc1dev">
+    <img src="https://img.shields.io/github/followers/manojkc1dev?label=Follow%20Me&style=flat&color=0e75b6" alt="Followers" />
+  </a>
+
+  <a href="https://github.com/manojkc1dev/manojkc1dev/stargazers">
+    <img src="https://img.shields.io/github/stars/manojkc1dev/manojkc1dev?label=Stars&style=flat&color=0e75b6" alt="Stars" />
+  </a>
+
+  <img src="https://komarev.com/ghpvc/?username=manojkc1dev&label=Profile%20Views&color=0e75b6&style=flat" alt="Profile Views" />
+</p>
